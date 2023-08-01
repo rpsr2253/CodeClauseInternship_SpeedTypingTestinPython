@@ -1,0 +1,40 @@
+# Speed Typing Test in Python
+import random
+import datetime
+
+def generate_random_words(word_list, num_words):
+    return random.choices(word_list, k=num_words)
+
+def calculate_typing_speed(start_time, end_time, num_words):
+    elapsed_time = end_time - start_time
+    seconds = elapsed_time.total_seconds()
+    minutes = seconds / 60
+    wpm = num_words / minutes
+    return wpm
+
+def main():
+    word_list = [
+        "apple", "banana", "cherry", "date", "elderberry",
+        "fig", "grape", "honeydew", "kiwi", "lemon"
+    ]
+    num_words = 10
+
+    print("Type the following words:")
+    words_to_type = generate_random_words(word_list, num_words)
+    print(" ".join(words_to_type))
+
+    input("Press Enter when you are ready to start.")
+    start_time = datetime.datetime.now()
+
+    typed_words = input("Type the words here: ").strip().split()
+    end_time = datetime.datetime.now()
+
+    correct_words = sum(1 for typed, original in zip(typed_words, words_to_type) if typed == original)
+    accuracy = (correct_words / num_words) * 100
+    typing_speed = calculate_typing_speed(start_time, end_time, num_words)
+
+    print(f"\nYour typing speed: {typing_speed:.2f} WPM")
+    print(f"Accuracy: {accuracy:.2f}%")
+
+if __name__ == "__main__":
+    main()
